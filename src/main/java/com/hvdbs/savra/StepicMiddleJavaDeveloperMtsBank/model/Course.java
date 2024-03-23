@@ -1,5 +1,7 @@
 package com.hvdbs.savra.StepicMiddleJavaDeveloperMtsBank.model;
 
+import java.util.Objects;
+
 public class Course {
     private Long id;
     private String author;
@@ -33,5 +35,18 @@ public class Course {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Course course = (Course) o;
+        return getId().equals(course.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
     }
 }
