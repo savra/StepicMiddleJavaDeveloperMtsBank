@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.time.OffsetDateTime;
 import java.util.NoSuchElementException;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
@@ -13,6 +14,6 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 public class HandleErrorService {
     @ExceptionHandler
     public ResponseEntity<ApiError> noSuchElementExceptionHandler(NoSuchElementException ex) {
-        return new ResponseEntity<>(new ApiError(ex.getMessage()), NOT_FOUND);
+        return new ResponseEntity<>(new ApiError(ex.getMessage(), OffsetDateTime.now()), NOT_FOUND);
     }
 }

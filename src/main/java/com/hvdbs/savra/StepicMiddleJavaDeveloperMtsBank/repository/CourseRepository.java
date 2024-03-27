@@ -38,7 +38,7 @@ public class CourseRepository {
                 .collect(Collectors.toList());
     }
 
-    public void delete(long id) {
-        courses.removeIf(course -> course.getId().equals(id));
+    public void delete(Course course) {
+        courses.remove(course);
     }
 }
