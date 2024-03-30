@@ -2,19 +2,16 @@ package com.hvdbs.savra.StepicMiddleJavaDeveloperMtsBank.dto;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-import org.springframework.util.StringUtils;
 
-import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.regex.Pattern;
-
-import static com.hvdbs.savra.StepicMiddleJavaDeveloperMtsBank.dto.TitleCase.Language.ANY;
-import static com.hvdbs.savra.StepicMiddleJavaDeveloperMtsBank.dto.TitleCase.Language.EN;
 
 public class TitleValidator implements ConstraintValidator<TitleCase, String> {
     private TitleCase.Language language;
-    private final Pattern pattern = Pattern.compile("^([А-Яа-я\"',:]+( [А-Яа-я\"',:]+)*|[A-Za-z\"',:]+( [A-Za-z\"',:]+)*)$");
-
+    private static final Pattern pattern = Pattern.compile("^([А-Яа-я\"',:]+( [А-Яа-я\"',:]+)*|[A-Za-z\"',:]+( [A-Za-z\"',:]+)*)$");
+    private static final Set<String> prepositions = Set.of("a", "but", "for", "or", "not", "the", "an");
+    private static final Predicate<String> startWithUpperCaseEN = (source) -> source.charAt(0) >= 'A' && source.charAt(0) <= 'Z';
     @Override
     public boolean isValid(String s, ConstraintValidatorContext constraintValidatorContext) {
         if (!pattern.matcher(s).matches()) {
@@ -25,7 +22,7 @@ public class TitleValidator implements ConstraintValidator<TitleCase, String> {
 
         return switch (language) {
             case RU -> {
-                if (words[0].charAt(0) < 'А' || words[0].charAt(0) > 'Я') {
+                if (!(words[0].charAt(0) >= 'А' && words[0].charAt(0) <= 'Я')) {
                     yield false;
                 }
 
@@ -39,17 +36,25 @@ public class TitleValidator implements ConstraintValidator<TitleCase, String> {
                 yield true;
             }
             case EN -> {
-                if (words[0].charAt(0) < 'A'
-                        || words[0].charAt(0) > 'Z'
-                        || words[words.length - 1].charAt(0) < 'A'
-                        || words[words.length - 1].charAt(0) > 'Z') {
+                if (!(startWithUpperCaseEN.test(words[0]) && startWithUpperCaseEN.test(words[words.length - 1]))) {
                     yield false;
+                }
+
+                for (String word : words) {
+                    if (prepositions.contains(word.toLowerCase())) {
+                        if (startWithUpperCaseEN.test(word)) {
+                            yield false;
+                        }
+                    } else {
+                        if (!startWithUpperCaseEN.test(word)) {
+                            yield false;
+                        }
+                    }
                 }
 
                 yield true;
             }
             case ANY -> true;
-            default -> false;
         };
     }
 

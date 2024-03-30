@@ -6,7 +6,6 @@ public class CourseRequestToUpdate {
     @NotBlank(message = "Course author has to be filled")
     private String author;
     @TitleCase
-    @NotBlank(message = "Course title has to be filled")
     private String title;
 
     public String getAuthor() {
