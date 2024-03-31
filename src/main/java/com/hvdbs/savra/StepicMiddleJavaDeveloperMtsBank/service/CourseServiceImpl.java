@@ -3,21 +3,16 @@ package com.hvdbs.savra.StepicMiddleJavaDeveloperMtsBank.service;
 import com.hvdbs.savra.StepicMiddleJavaDeveloperMtsBank.dto.CourseRequestToUpdate;
 import com.hvdbs.savra.StepicMiddleJavaDeveloperMtsBank.model.Course;
 import com.hvdbs.savra.StepicMiddleJavaDeveloperMtsBank.repository.CourseRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
-import static java.util.Objects.requireNonNullElse;
-
+@RequiredArgsConstructor
 @Service
 public class CourseServiceImpl implements CourseService {
     private final CourseRepository courseRepository;
-
-    public CourseServiceImpl(CourseRepository courseRepository) {
-        this.courseRepository = courseRepository;
-    }
 
     @Override
     public List<Course> findAll() {
@@ -34,21 +29,22 @@ public class CourseServiceImpl implements CourseService {
         Course course = courseRepository.findById(id).orElseThrow();
         course.setTitle(requestToUpdate.getTitle());
         course.setAuthor(requestToUpdate.getAuthor());
+
+        courseRepository.save(course);
     }
 
     @Override
     public List<Course> findByTitleWithPrefix(String titlePrefix) {
-        return courseRepository.findByTitleWithPrefix(requireNonNullElse(titlePrefix, ""));
+        return courseRepository.findByTitleLike(titlePrefix + "%");
     }
 
     @Override
     public void createCourse(CourseRequestToUpdate request) {
-        courseRepository.findAll().stream()
-                .max(Comparator.comparing(Course::getId))
-                .map(Course::getId)
-                .ifPresentOrElse(
-                        id -> courseRepository.save(new Course(id + 1, request.getAuthor(), request.getTitle())),
-                        () -> courseRepository.save(new Course(1L, request.getAuthor(), request.getTitle())));
+        Course course = new Course();
+        course.setAuthor(request.getAuthor());
+        course.setTitle(request.getTitle());
+
+        courseRepository.save(course);
     }
 
     @Override

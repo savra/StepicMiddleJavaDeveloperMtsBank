@@ -1,0 +1,36 @@
+databaseChangeLog:
+  - changeSet:
+      id: '2021092501'
+      author: 'Semyon Kirekov'
+      changes:
+        - createTable:
+            tableName: 'courses'
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: courses_id_pk
+              - column:
+                  name: author
+                  type: varchar(255)
+              - column:
+                  name: title
+                  type: varchar(255)
+  - changeSet:
+      id: '2021092502'
+      author: 'Semyon Kirekov'
+      changes:
+        - createTable:
+            tableName: 'lessons'
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: lesson_id_pk
+              - column:
+                  name: name
+                  type: varchar(255)
