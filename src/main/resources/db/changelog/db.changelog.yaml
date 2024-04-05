@@ -34,3 +34,79 @@ databaseChangeLog:
               - column:
                   name: name
                   type: varchar(255)
+  - changeSet:
+      id: '20240331_1'
+      author: Sergey Savrukhin
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: username
+                  type: varchar(255)
+  - changeSet:
+      id: '20240331_2'
+      author: Sergey Savrukhin
+      changes:
+        - createTable:
+            tableName: courses_users
+            columns:
+              - column:
+                  name: courses_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: users_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: '20240331_3'
+      author: Sergey Savrukhin
+      changes:
+        - createTable:
+            tableName: roles
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: text
+  - changeSet:
+      id: '20240331_4'
+      author: Sergey Savrukhin
+      changes:
+        - createTable:
+            tableName: roles_users
+            columns:
+              - column:
+                  name: roles_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: users_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: '20240304_1'
+      author: Sergey Savrukhin
+      changes:
+        - addColumn:
+            tableName: users
+            columns:
+              - column:
+                  name: password
+                  type: text

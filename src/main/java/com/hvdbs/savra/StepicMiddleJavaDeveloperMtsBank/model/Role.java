@@ -1,5 +1,6 @@
 package com.hvdbs.savra.StepicMiddleJavaDeveloperMtsBank.model;
 
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,32 +9,31 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-@Table(name = "users")
-@Entity
 @Setter
 @Getter
-public class User {
+@Entity
+@Table(name = "roles")
+public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String username;
-    private String password;
-    @ManyToMany(mappedBy = "users")
-    private Set<Course> courses = new HashSet<>();
+    private long id;
 
-    @ManyToMany(mappedBy = "users")
-    private Set<Role> roles = new HashSet<>();
+    @Column(unique = true)
+    private String name;
+
+    @ManyToMany
+    private Set<User> users = new HashSet<>();
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return id.equals(user.id);
+        Role role = (Role) o;
+        return name.equals(role.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(name);
     }
 }

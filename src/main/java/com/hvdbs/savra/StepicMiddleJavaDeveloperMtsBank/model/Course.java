@@ -6,7 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Table(name = "courses")
 @Setter
@@ -22,6 +24,9 @@ public class Course {
     private String author;
     @NotBlank(message = "Course title have to be filled")
     private String title;
+
+    @ManyToMany
+    private Set<User> users = new HashSet<>();
 
     public Course(Long id, String author, String title) {
         this.id = id;
