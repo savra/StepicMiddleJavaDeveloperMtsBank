@@ -3,12 +3,10 @@ package com.hvdbs.savra.StepicMiddleJavaDeveloperMtsBank.controller;
 import com.hvdbs.savra.StepicMiddleJavaDeveloperMtsBank.dto.CourseRequestToUpdate;
 import com.hvdbs.savra.StepicMiddleJavaDeveloperMtsBank.model.Course;
 import com.hvdbs.savra.StepicMiddleJavaDeveloperMtsBank.service.CourseService;
-import com.hvdbs.savra.StepicMiddleJavaDeveloperMtsBank.service.UserService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 import static java.util.Objects.requireNonNullElse;
@@ -17,13 +15,13 @@ import static java.util.Objects.requireNonNullElse;
 @RequestMapping("/course")
 public class CourseController {
     private final CourseService courseService;
-    private final UserService userService;
+   // private final UserService userService;
 
     @Autowired
-    public CourseController(CourseService courseService,
-                            @Qualifier("userServiceImpl") UserService userService) {
+    public CourseController(CourseService courseService/*,
+                            @Qualifier("userServiceImpl") UserService userService*/) {
         this.courseService = courseService;
-        this.userService = userService;
+       /* this.userService = userService;*/
     }
 
     @GetMapping
@@ -57,9 +55,9 @@ public class CourseController {
         return courseService.findByTitleWithPrefix(requireNonNullElse(titlePrefix, ""));
     }
 
-    @GetMapping("/test")
+   /* @GetMapping("/test")
     public void test() {
         userService.getCurrentUser();
         userService.test2(); // При вызове test2 не будет вызван getCurrentUser, т.к. это внутренний вызов
-    }
+    }*/
 }
