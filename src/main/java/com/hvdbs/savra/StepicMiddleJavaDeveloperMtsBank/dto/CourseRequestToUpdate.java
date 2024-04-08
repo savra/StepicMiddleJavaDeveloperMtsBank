@@ -1,6 +1,6 @@
 package com.hvdbs.savra.StepicMiddleJavaDeveloperMtsBank.dto;
 
-import jakarta.validation.constraints.NotBlank;
+import javax.validation.constraints.NotBlank;
 
 public class CourseRequestToUpdate {
     @NotBlank(message = "Course author has to be filled")
