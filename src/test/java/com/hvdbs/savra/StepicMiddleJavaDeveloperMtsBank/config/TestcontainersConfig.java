@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Slf4j
 @Testcontainers(disabledWithoutDocker = true)
 public class TestcontainersConfig {
-    public static final PostgreSQLContainer<?> POSTGRE_SQL_CONTAINER;
+    public static final PostgreSQLContainer<?> POSTGRES_CONTAINER;
     private static final String TEST_DATABASE_NAME = "testdb";
     private static final String TEST_USER = "postgres";
     private static final String TEST_PASSWORD = "postgres";
@@ -34,23 +34,23 @@ public class TestcontainersConfig {
         DockerImageName postgresImage = DockerImageName.parse(properties.getProperty("postgres.container.image"))
                 .asCompatibleSubstituteFor("postgres");
 
-        POSTGRE_SQL_CONTAINER = new PostgreSQLContainer<>(postgresImage)
+        POSTGRES_CONTAINER = new PostgreSQLContainer<>(postgresImage)
                 .withDatabaseName(TEST_DATABASE_NAME)
                 .withUsername(TEST_USER)
                 .withPassword(TEST_PASSWORD)
                 .withNetwork(NETWORK)
                 .withUrlParam("characterEncoding", "UTF-8");
 
-        POSTGRE_SQL_CONTAINER.start();
+        POSTGRES_CONTAINER.start();
     }
 
     @BeforeAll
     static void checkContainersRunning() {
-        assertTrue(POSTGRE_SQL_CONTAINER.isRunning());
+        assertTrue(POSTGRES_CONTAINER.isRunning());
     }
 
     @AfterAll
     static void closeContainers() {
-        POSTGRE_SQL_CONTAINER.close();
+        POSTGRES_CONTAINER.close();
     }
 }
