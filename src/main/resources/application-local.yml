@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/courses_app
+    username: courses_app
+    password: courses_app
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    properties.hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+    properties.hibernate.format_sql: true
+    hibernate.ddl-auto: validate
+  liquibase.change-log: classpath:db/changelog/db.changelog.yaml
+logging:
+  level:
+    org.springframework.orm.jpa.JpaTransactionManager: TRACE
+    org.hibernate.SQL: debug #Включить логирование запросов Hibernate
+    #    org.hibernate.type.descriptor.sql: trace #Включить вывод переменных привязки Hibernate в лог для Hibernate 4 & 5
+    org.hibernate.orm.jdbc.bind: trace #Включить вывод переменных привязки Hibernate в лог для Hibernate 6
+    org.hibernate.stat: debug #Включить вывод количества времени, которое занял запрос и сколько строк было выбрано в результате
+    com.zaxxer.hikari.HikariConfig: trace #Отображать информации по пулу потоков Hikari
+    com.zaxxer.hikari: trace
+    org.postgresql.jdbc: trace

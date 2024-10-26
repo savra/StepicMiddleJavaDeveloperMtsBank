@@ -45,6 +45,11 @@ public class CourseController {
         courseService.updateCourse(id, request);
     }
 
+    @PutMapping("/updateAll")
+    public void updateCourse() {
+        courseService.updateAll();
+    }
+
     @DeleteMapping("/{id}")
     public void deleteCourse(@PathVariable long id) {
         courseService.deleteCourse(id);

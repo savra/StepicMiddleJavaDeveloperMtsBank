@@ -1,0 +1,29 @@
+services:
+  courses_app-postgres:
+    image: postgres
+    command: >
+      postgres
+      -c logging_collector=on
+      -c log_directory=pg_log
+      -c log_filename=postgresql-%Y-%m-%d_%H%M%S.log
+      -c log_statement=all
+      -c log_min_duration_statement=0
+      -c log_connections=on
+      -c log_disconnections=on
+      -c log_duration=on
+      -c log_lock_waits=on
+      -c log_temp_files=0
+      -c log_autovacuum_min_duration=0
+      -c log_error_verbosity=verbose
+      -c log_min_error_statement=error
+      -c log_min_messages=debug1
+      -c log_line_prefix='%t [%p]: [%l-1] user=%u,db=%d,app=%a,client=%h '
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=courses_app
+      - POSTGRES_USER=courses_app
+      - POSTGRES_PASSWORD=courses_app
+    volumes:
+      - ./postgresql.conf:/etc/postgresql/postgresql.conf
+      - ./data:/var/lib/postgresql/data

@@ -27,6 +27,7 @@ public class Course {
     private String author;
     @NotBlank(message = "Course title have to be filled")
     private String title;
+    private int test;
 
     @ManyToMany
     private Set<User> users = new HashSet<>();

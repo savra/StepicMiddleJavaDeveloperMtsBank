@@ -22,7 +22,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests()
                 .antMatchers("/admin/**")
                 .hasRole("ADMIN")
-                .anyRequest().authenticated()
+            //    .anyRequest().authenticated()
                 .and()
                 .build();
     }

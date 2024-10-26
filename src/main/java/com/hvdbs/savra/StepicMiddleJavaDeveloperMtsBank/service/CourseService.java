@@ -19,4 +19,6 @@ public interface CourseService {
     void createCourse(CourseRequestToUpdate request);
 
     void deleteCourse(long id);
+
+    void updateAll();
 }

@@ -10,7 +10,7 @@ import org.springframework.test.context.DynamicPropertySource;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
-import static com.hvdbs.savra.StepicMiddleJavaDeveloperMtsBank.config.TestcontainersConfig.POSTGRE_SQL_CONTAINER;
+import static com.hvdbs.savra.StepicMiddleJavaDeveloperMtsBank.config.TestcontainersConfig.POSTGRES_CONTAINER;
 import static org.testcontainers.shaded.com.google.common.net.HttpHeaders.CONTENT_TYPE;
 
 @ActiveProfiles("test")
@@ -25,12 +25,12 @@ public abstract class TestConfig {
 
     @DynamicPropertySource
     static void registerContainersProperties(DynamicPropertyRegistry registry) {
-        registry.add("spring.datasource.url", POSTGRE_SQL_CONTAINER::getJdbcUrl);
-        registry.add("spring.datasource.password", POSTGRE_SQL_CONTAINER::getPassword);
-        registry.add("spring.datasource.username", POSTGRE_SQL_CONTAINER::getUsername);
-        registry.add("spring.flyway.url", POSTGRE_SQL_CONTAINER::getJdbcUrl);
-        registry.add("spring.flyway.user", POSTGRE_SQL_CONTAINER::getUsername);
-        registry.add("spring.flyway.password", POSTGRE_SQL_CONTAINER::getPassword);
+        registry.add("spring.datasource.url", POSTGRES_CONTAINER::getJdbcUrl);
+        registry.add("spring.datasource.password", POSTGRES_CONTAINER::getPassword);
+        registry.add("spring.datasource.username", POSTGRES_CONTAINER::getUsername);
+        registry.add("spring.flyway.url", POSTGRES_CONTAINER::getJdbcUrl);
+        registry.add("spring.flyway.user", POSTGRES_CONTAINER::getUsername);
+        registry.add("spring.flyway.password", POSTGRES_CONTAINER::getPassword);
     }
 
     protected static void stubGet(String url, String responseBodyFile) {
