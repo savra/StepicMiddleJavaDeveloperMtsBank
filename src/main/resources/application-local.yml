@@ -17,5 +17,3 @@ logging:
     org.hibernate.orm.jdbc.bind: trace #Включить вывод переменных привязки Hibernate в лог для Hibernate 6
     org.hibernate.stat: debug #Включить вывод количества времени, которое занял запрос и сколько строк было выбрано в результате
     com.zaxxer.hikari.HikariConfig: trace #Отображать информации по пулу потоков Hikari
-    com.zaxxer.hikari: trace
-    org.postgresql.jdbc: trace
